@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "json-server server.json -p 3001 -w -d 500"
+  },
+  "dependencies": {
+    "json-server": "^0.15.1"
+  }
+}
