@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
+import playlists from './playlists';
+
 const reducers = combineReducers({
-  example: () => [],
+  playlists,
 });
 
 export default reducers;
