@@ -14,7 +14,7 @@ export default function Playlists(state = initialState, action) {
   switch (action.type) {
     case Types.GET_REQUEST:
       return state.merge({ loading: true });
-    case Types.GET_SUCCESSREQUEST:
+    case Types.GET_SUCCESS:
       return state.merge({ loading: false, data: action.playload.data });
     default:
       return state;
