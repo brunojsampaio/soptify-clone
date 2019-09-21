@@ -30,14 +30,18 @@ const Player = ({ player }) => (
     )}
 
     <Current>
-      <img
-        src="https://images.theconversation.com/files/258026/original/file-20190208-174861-nms2kt.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip"
-        alt="Cover"
-      />
-      <div>
-        <span>Titulo da música</span>
-        <small>Artista</small>
-      </div>
+      {!!player.currentSong && (
+        <>
+          <img
+            src={player.currentSong.thumbnail}
+            alt={player.currentSong.title}
+          />
+          <div>
+            <span>{player.currentSong.title}</span>
+            <small>{player.currentSong.author}</small>
+          </div>
+        </>
+      )}
     </Current>
 
     <Progress>
@@ -87,6 +91,9 @@ const Player = ({ player }) => (
 Player.propTypes = {
   player: PropTypes.shape({
     currentSong: PropTypes.shape({
+      thumbnail: PropTypes.string,
+      title: PropTypes.string,
+      author: PropTypes.string,
       file: PropTypes.string,
     }),
     status: PropTypes.string,
