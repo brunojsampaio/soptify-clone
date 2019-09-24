@@ -7,12 +7,15 @@ export const Types = {
   PAUSE: 'player/PAUSE',
   NEXT: 'player/NEXT',
   PREV: 'player/PREV',
+  PLAYING: 'player/PLAYING',
 };
 
 const initialState = Immutable({
   currentSong: null,
   list: [],
   status: Sound.status.PLAYING,
+  position: null,
+  duration: null,
 });
 
 export default function player(state = initialState, action) {
@@ -61,6 +64,10 @@ export default function player(state = initialState, action) {
 
       return state;
     }
+    case Types.PLAYING:
+      return state.merge({
+        ...action.payload,
+      });
     default:
       return state;
   }
@@ -79,4 +86,9 @@ export const Creators = {
   prev: () => ({ type: Types.PREV }),
 
   next: () => ({ type: Types.NEXT }),
+
+  playing: ({ position, duration }) => ({
+    type: Types.PLAYING,
+    payload: { position, duration },
+  }),
 };
