@@ -8,6 +8,8 @@ export const Types = {
   NEXT: 'player/NEXT',
   PREV: 'player/PREV',
   PLAYING: 'player/PLAYING',
+  HANDLE_POSITION: 'player/HANDLE_POSITION',
+  SET_POSITION: 'player/SET_POSITION',
 };
 
 const initialState = Immutable({
@@ -15,6 +17,7 @@ const initialState = Immutable({
   list: [],
   status: Sound.status.PLAYING,
   position: null,
+  positionShown: null,
   duration: null,
 });
 
@@ -25,6 +28,7 @@ export default function player(state = initialState, action) {
         currentSong: action.playload.song,
         list: action.playload.list,
         status: Sound.status.PLAYING,
+        position: 0,
       });
     case Types.PLAY:
       return state.merge({
@@ -44,6 +48,7 @@ export default function player(state = initialState, action) {
         return state.merge({
           currentSong: prev,
           status: Sound.status.PLAYING,
+          position: 0,
         });
       }
 
@@ -59,6 +64,7 @@ export default function player(state = initialState, action) {
         return state.merge({
           currentSong: next,
           status: Sound.status.PLAYING,
+          position: 0,
         });
       }
 
@@ -67,6 +73,15 @@ export default function player(state = initialState, action) {
     case Types.PLAYING:
       return state.merge({
         ...action.payload,
+      });
+    case Types.HANDLE_POSITION:
+      return state.merge({
+        positionShown: state.duration * action.payload.percent,
+      });
+    case Types.SET_POSITION:
+      return state.merge({
+        position: state.duration * action.payload.percent,
+        positionShown: null,
       });
     default:
       return state;
@@ -90,5 +105,15 @@ export const Creators = {
   playing: ({ position, duration }) => ({
     type: Types.PLAYING,
     payload: { position, duration },
+  }),
+
+  handlePosition: percent => ({
+    type: Types.HANDLE_POSITION,
+    payload: { percent },
+  }),
+
+  setPosition: percent => ({
+    type: Types.SET_POSITION,
+    payload: { percent },
   }),
 };
